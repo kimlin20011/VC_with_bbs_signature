@@ -27,6 +27,8 @@ import revealDocument from "./data/deriveProofFrame.json";
 import citizenVocab from "./data/citizenVocab.json";
 import credentialContext from "./data/credentialsContext.json";
 
+let style = "color: yellow; background-color: black; line-height: 4;"
+
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 const documents: any = {
   "did:example:489398593#test": keyPairOptions,
@@ -64,7 +66,7 @@ const main = async (): Promise<void> => {
   //Import the example key pair
   const keyPair = await new Bls12381G2KeyPair(keyPairOptions);
 
-  console.log("Input document");
+  console.log("%cInput document", style);
   console.log(JSON.stringify(inputDocument, null, 2));
 
   //Sign the input document
@@ -87,12 +89,16 @@ const main = async (): Promise<void> => {
   console.log("Verification result");
   console.log(JSON.stringify(verified, null, 2));
 
+  console.log("derive Proof Frame");
+  console.log(revealDocument);
+
   //Derive a proof
   const derivedProof = await deriveProof(signedDocument, revealDocument, {
     suite: new BbsBlsSignatureProof2020(),
     documentLoader
   });
 
+  console.log("derived Proof");
   console.log(JSON.stringify(derivedProof, null, 2));
 
   //Verify the derived proof
